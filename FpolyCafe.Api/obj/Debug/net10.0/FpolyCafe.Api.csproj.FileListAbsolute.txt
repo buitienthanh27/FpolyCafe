@@ -168,3 +168,4 @@ D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\ref\FpolyCafe
 D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\FpolyCafe.Api.sourcelink.json
