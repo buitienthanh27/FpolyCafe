@@ -1,0 +1,22 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  FpolyCafe.Domain -> D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Domain\bin\Debug\net10.0\FpolyCafe.Domain.dll
+  FpolyCafe.Application -> D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\Services\FileService.cs(22,20): warning CS8603: Possible null reference return. [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\FpolyCafe.Infrastructure.csproj]
+  FpolyCafe.Infrastructure -> D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\Middleware\ExceptionHandlingMiddleware.cs(46,18): error CS0246: The type or namespace name 'BadRequestException' could not be found (are you missing a using directive or an assembly reference?) [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\Middleware\ExceptionHandlingMiddleware.cs(50,18): error CS0103: The name 'ForbiddenException' does not exist in the current context [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\Microsoft.AspNetCore.OpenApi.SourceGenerators\Microsoft.AspNetCore.OpenApi.SourceGenerators.XmlCommentGenerator\OpenApiXmlCommentSupport.generated.cs(399,41): error CS0200: Property or indexer 'IOpenApiMediaType.Example' cannot be assigned to -- it is read only [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\Microsoft.AspNetCore.OpenApi.SourceGenerators\Microsoft.AspNetCore.OpenApi.SourceGenerators.XmlCommentGenerator\OpenApiXmlCommentSupport.generated.cs(461,41): error CS0200: Property or indexer 'IOpenApiMediaType.Example' cannot be assigned to -- it is read only [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+
+Build FAILED.
+
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\Services\FileService.cs(22,20): warning CS8603: Possible null reference return. [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\FpolyCafe.Infrastructure.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\Middleware\ExceptionHandlingMiddleware.cs(46,18): error CS0246: The type or namespace name 'BadRequestException' could not be found (are you missing a using directive or an assembly reference?) [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\Middleware\ExceptionHandlingMiddleware.cs(50,18): error CS0103: The name 'ForbiddenException' does not exist in the current context [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\Microsoft.AspNetCore.OpenApi.SourceGenerators\Microsoft.AspNetCore.OpenApi.SourceGenerators.XmlCommentGenerator\OpenApiXmlCommentSupport.generated.cs(399,41): error CS0200: Property or indexer 'IOpenApiMediaType.Example' cannot be assigned to -- it is read only [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\obj\Debug\net10.0\Microsoft.AspNetCore.OpenApi.SourceGenerators\Microsoft.AspNetCore.OpenApi.SourceGenerators.XmlCommentGenerator\OpenApiXmlCommentSupport.generated.cs(461,41): error CS0200: Property or indexer 'IOpenApiMediaType.Example' cannot be assigned to -- it is read only [D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Api\FpolyCafe.Api.csproj]
+    1 Warning(s)
+    4 Error(s)
+
+Time Elapsed 00:00:07.59
