@@ -23,11 +23,18 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Recipe> Recipes { get; set; } = null!;
     public DbSet<InventoryReceipt> InventoryReceipts { get; set; } = null!;
     public DbSet<InventoryReceiptDetail> InventoryReceiptDetails { get; set; } = null!;
+    public DbSet<Attendance> Attendances { get; set; } = null!;
+    public DbSet<AttendanceBreak> AttendanceBreaks { get; set; } = null!;
+    public DbSet<SalaryRule> SalaryRules { get; set; } = null!;
+    public DbSet<AttendanceAdjustment> AttendanceAdjustments { get; set; } = null!;
+    public DbSet<AuditLog> AuditLogs { get; set; } = null!;
+    public DbSet<MonthlyPayroll> MonthlyPayrolls { get; set; } = null!;
+    public DbSet<MonthlyPayrollDetail> MonthlyPayrollDetails { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -3,5 +3,6 @@ namespace FpolyCafe.Domain.Enums;
 public enum RoleType
 {
     Admin = 0,
-    Staff = 1
+    Staff = 1,
+    Manager = 2
 }

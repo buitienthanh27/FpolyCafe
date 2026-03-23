@@ -20,6 +20,13 @@ public interface IAppDbContext
     DbSet<Recipe> Recipes { get; set; }
     DbSet<InventoryReceipt> InventoryReceipts { get; set; }
     DbSet<InventoryReceiptDetail> InventoryReceiptDetails { get; set; }
+    DbSet<Attendance> Attendances { get; set; }
+    DbSet<AttendanceBreak> AttendanceBreaks { get; set; }
+    DbSet<SalaryRule> SalaryRules { get; set; }
+    DbSet<AttendanceAdjustment> AttendanceAdjustments { get; set; }
+    DbSet<AuditLog> AuditLogs { get; set; }
+    DbSet<MonthlyPayroll> MonthlyPayrolls { get; set; }
+    DbSet<MonthlyPayrollDetail> MonthlyPayrollDetails { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

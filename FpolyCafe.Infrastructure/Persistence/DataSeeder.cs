@@ -14,29 +14,35 @@ public static class DataSeeder
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        // Tá»± Ä‘á»™ng migrate
         context.Database.Migrate();
 
         if (!context.Users.Any())
         {
-            context.Users.Add(new User
-            {
-                Username = "admin",
-                // Giáº£ láº­p máº­t kháº©u "admin123", sau nÃ y sáº½ cáº¥u hÃ¬nh BCrypt
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
-                FullName = "Administrator",
-                Role = RoleType.Admin,
-                IsActive = true
-            });
-
-            context.Users.Add(new User
-            {
-                Username = "staff1",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("staff123"),
-                FullName = "NhÃ¢n viÃªn BÃ¡n HÃ ng 1",
-                Role = RoleType.Staff,
-                IsActive = true
-            });
+            context.Users.AddRange(
+                new User
+                {
+                    Username = "admin",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
+                    FullName = "Administrator",
+                    Role = RoleType.Admin,
+                    IsActive = true
+                },
+                new User
+                {
+                    Username = "staff1",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("staff123"),
+                    FullName = "Nhân viên Bán Hàng 1",
+                    Role = RoleType.Staff,
+                    IsActive = true
+                },
+                new User
+                {
+                    Username = "manager1",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("manager123"),
+                    FullName = "Qu?n l? Ca 1",
+                    Role = RoleType.Manager,
+                    IsActive = true
+                });
 
             context.SaveChanges();
         }
@@ -44,11 +50,9 @@ public static class DataSeeder
         if (!context.Categories.Any())
         {
             context.Categories.AddRange(
-                new Category { Name = "CÃ  PhÃª" },
-                new Category { Name = "TrÃ  Sá»¯a" },
-                new Category { Name = "NÆ°á»›c Ã‰p" }
-            );
-
+                new Category { Name = "Cà Phê", IsActive = true },
+                new Category { Name = "Trà S?a", IsActive = true },
+                new Category { Name = "Ný?c Ép", IsActive = true });
             context.SaveChanges();
         }
 
@@ -56,24 +60,47 @@ public static class DataSeeder
         {
             context.Sizes.AddRange(
                 new Size { SizeName = "M" },
-                new Size { SizeName = "L" }
-            );
+                new Size { SizeName = "L" });
+            context.SaveChanges();
+        }
 
+        if (!context.Ingredients.Any())
+        {
+            context.Ingredients.AddRange(
+                new Ingredient { IngredientName = "Cà phê h?t", Unit = "gram", StockQuantity = 5000 },
+                new Ingredient { IngredientName = "S?a ð?c", Unit = "ml", StockQuantity = 3000 },
+                new Ingredient { IngredientName = "Trân châu", Unit = "gram", StockQuantity = 4000 });
             context.SaveChanges();
         }
 
         if (!context.Products.Any())
         {
-            var coffeeCat = context.Categories.First(c => c.Name == "CÃ  PhÃª");
-            var teaCat = context.Categories.First(c => c.Name == "TrÃ  Sá»¯a");
+            var coffeeCat = context.Categories.First(c => c.Name == "Cà Phê");
+            var teaCat = context.Categories.First(c => c.Name == "Trà S?a");
 
             context.Products.AddRange(
-                new Product { Name = "CÃ  PhÃª Äen", CategoryId = coffeeCat.CategoryId, Price = 25000, IsActive = true },
-                new Product { Name = "CÃ  PhÃª Sá»¯a", CategoryId = coffeeCat.CategoryId, Price = 29000, IsActive = true },
-                new Product { Name = "Báº¡c Xá»‰u", CategoryId = coffeeCat.CategoryId, Price = 32000, IsActive = true },
-                new Product { Name = "TrÃ  Sá»¯a TrÃ¢n ChÃ¢u", CategoryId = teaCat.CategoryId, Price = 35000, IsActive = true }
-            );
+                new Product { Name = "Cà Phê Ðen", CategoryId = coffeeCat.CategoryId, Price = 25000, IsActive = true },
+                new Product { Name = "Cà Phê S?a", CategoryId = coffeeCat.CategoryId, Price = 29000, IsActive = true },
+                new Product { Name = "B?c X?u", CategoryId = coffeeCat.CategoryId, Price = 32000, IsActive = true },
+                new Product { Name = "Trà S?a Trân Châu", CategoryId = teaCat.CategoryId, Price = 35000, IsActive = true });
+            context.SaveChanges();
+        }
 
+        if (!context.Toppings.Any())
+        {
+            var pearl = context.Ingredients.First(i => i.IngredientName == "Trân châu");
+            context.Toppings.AddRange(
+                new Topping { ToppingName = "Trân châu ðen", Price = 8000, IngredientId = pearl.IngredientId, QuantityNeeded = 30, IsActive = true },
+                new Topping { ToppingName = "Foam kem s?a", Price = 12000, QuantityNeeded = 0, IsActive = true });
+            context.SaveChanges();
+        }
+
+        if (!context.SalaryRules.Any())
+        {
+            context.SalaryRules.AddRange(
+                new SalaryRule { Role = RoleType.Staff, HourlyRate = 25000, OvertimeRate = 35000, NightShiftMultiplier = 1.2m, StandardHoursPerShift = 8, MaxHoursPerShift = 12, EffectiveFrom = DateTime.UtcNow.Date, IsActive = true },
+                new SalaryRule { Role = RoleType.Manager, HourlyRate = 35000, OvertimeRate = 50000, NightShiftMultiplier = 1.3m, StandardHoursPerShift = 8, MaxHoursPerShift = 12, EffectiveFrom = DateTime.UtcNow.Date, IsActive = true },
+                new SalaryRule { Role = RoleType.Admin, HourlyRate = 40000, OvertimeRate = 60000, NightShiftMultiplier = 1.3m, StandardHoursPerShift = 8, MaxHoursPerShift = 12, EffectiveFrom = DateTime.UtcNow.Date, IsActive = true });
             context.SaveChanges();
         }
     }

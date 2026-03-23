@@ -1,8 +1,12 @@
-using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FpolyCafe.Domain.Exceptions;
+using AppBadRequestException = FpolyCafe.Application.Common.Exceptions.BadRequestException;
+using AppNotFoundException = FpolyCafe.Application.Common.Exceptions.NotFoundException;
+using AppUnauthorizedException = FpolyCafe.Application.Common.Exceptions.UnauthorizedException;
+using DomainBadRequestException = FpolyCafe.Domain.Exceptions.BadRequestException;
+using DomainForbiddenException = FpolyCafe.Domain.Exceptions.ForbiddenException;
+using DomainNotFoundException = FpolyCafe.Domain.Exceptions.NotFoundException;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -25,44 +29,40 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
-        catch (Exception ex)
+        catch (System.Exception ex)
         {
             _logger.LogError(ex, "An unhandled exception has occurred.");
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private static Task HandleExceptionAsync(HttpContext context, System.Exception exception)
     {
         var code = HttpStatusCode.InternalServerError;
-        var result = string.Empty;
+        object payload = new { code = "internal_error", message = "An internal server error occurred." };
 
         switch (exception)
         {
-            case NotFoundException notFoundException:
+            case AppNotFoundException or DomainNotFoundException:
                 code = HttpStatusCode.NotFound;
-                result = JsonSerializer.Serialize(new { error = notFoundException.Message });
+                payload = new { code = "not_found", message = exception.Message };
                 break;
-            case BadRequestException badRequestException:
+            case AppBadRequestException or DomainBadRequestException:
                 code = HttpStatusCode.BadRequest;
-                result = JsonSerializer.Serialize(new { error = badRequestException.Message });
+                payload = new { code = "bad_request", message = exception.Message };
                 break;
-            case ForbiddenException:
+            case DomainForbiddenException:
                 code = HttpStatusCode.Forbidden;
-                result = JsonSerializer.Serialize(new { error = "You do not have permission to perform this action." });
+                payload = new { code = "forbidden", message = exception.Message };
                 break;
-            case UnauthorizedAccessException:
+            case AppUnauthorizedException or UnauthorizedAccessException:
                 code = HttpStatusCode.Unauthorized;
-                result = JsonSerializer.Serialize(new { error = "Unauthorized access." });
-                break;
-            default:
-                result = JsonSerializer.Serialize(new { error = "An internal server error occurred." });
+                payload = new { code = "unauthorized", message = exception.Message };
                 break;
         }
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;
-
-        return context.Response.WriteAsync(result);
+        return context.Response.WriteAsync(JsonSerializer.Serialize(payload));
     }
 }
