@@ -9,7 +9,7 @@ namespace FpolyCafe.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Admin,Manager")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -34,6 +34,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<int>> Create([FromBody] CreateUserDto request)
     {
         var id = await _userService.CreateUserAsync(request);
@@ -41,6 +42,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateUserDto request)
     {
         var result = await _userService.UpdateUserAsync(id, request);

@@ -20,6 +20,7 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet("dashboard")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<ActionResult<DashboardSummaryDto>> GetDashboardSummary()
     {
         var result = await _reportService.GetDashboardSummaryAsync();
@@ -27,6 +28,7 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet("top-products")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<ActionResult<IEnumerable<TopProductDto>>> GetTopProducts([FromQuery] int count = 5)
     {
         var result = await _reportService.GetTopSellingProductsAsync(count);
@@ -34,6 +36,7 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet("revenue")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<ActionResult<IEnumerable<DailyRevenueDto>>> GetRevenueReport([FromQuery] int days = 7)
     {
         var result = await _reportService.GetRevenueReportAsync(days);

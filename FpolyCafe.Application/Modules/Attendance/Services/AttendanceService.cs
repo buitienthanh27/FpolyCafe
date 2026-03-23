@@ -58,7 +58,7 @@ public class AttendanceService : IAttendanceService
         var attendance = await GetOpenAttendanceEntity(employeeId, cancellationToken);
         if (attendance.Status == AttendanceStatus.OnBreak)
         {
-            throw new BadRequestException("Ca làm hi?n ðang trong tr?ng thái ngh?.");
+            throw new BadRequestException("Ca lï¿½m hi?n ï¿½ang trong tr?ng thï¿½i ngh?.");
         }
 
         var breakEntity = new DomainAttendanceBreak
@@ -83,7 +83,7 @@ public class AttendanceService : IAttendanceService
         var activeBreak = attendance.Breaks.OrderByDescending(x => x.StartTime).FirstOrDefault(x => x.Status == BreakStatus.Active);
         if (activeBreak == null)
         {
-            throw new BadRequestException("Không có phiên ngh? ðang m?.");
+            throw new BadRequestException("Khï¿½ng cï¿½ phiï¿½n ngh? ï¿½ang m?.");
         }
 
         var endTime = DateTime.UtcNow;
@@ -108,7 +108,7 @@ public class AttendanceService : IAttendanceService
         var now = DateTime.UtcNow;
 
         CloseActiveBreaks(attendance, now);
-        ApplyAttendanceCalculation(attendance, now, attendance.Status == AttendanceStatus.MissingCheckout, request.Notes);
+        await ApplyAttendanceCalculationAsync(attendance, now, attendance.Status == AttendanceStatus.MissingCheckout, request.Notes, cancellationToken);
         attendance.CheckOutSource = request.Source;
         attendance.CheckOutIp = ipAddress;
         attendance.Status = AttendanceStatus.Completed;
@@ -161,7 +161,7 @@ public class AttendanceService : IAttendanceService
 
         query = ApplyAttendanceFilters(query, from, to, null);
         var items = await query.OrderByDescending(x => x.CheckInTime).ToListAsync(cancellationToken);
-        return items.Select(MapAttendance);
+        return items.Select(MapAttendance).Where(x => x != null).Select(x => x!);
     }
 
     public async Task<IEnumerable<AttendanceDto>> GetAttendancesAsync(int? employeeId, DateTime? from, DateTime? to, string? status, CancellationToken cancellationToken = default)
@@ -178,7 +178,7 @@ public class AttendanceService : IAttendanceService
 
         query = ApplyAttendanceFilters(query, from, to, status);
         var items = await query.OrderByDescending(x => x.CheckInTime).ToListAsync(cancellationToken);
-        return items.Select(MapAttendance);
+        return items.Select(MapAttendance).Where(x => x != null).Select(x => x!);
     }
 
     public async Task<AttendanceDto> AdjustAttendanceAsync(int attendanceId, int adjustedByUserId, AdjustAttendanceRequestDto request, string? ipAddress, CancellationToken cancellationToken = default)
@@ -226,7 +226,7 @@ public class AttendanceService : IAttendanceService
 
         var effectiveCheckout = request.CheckOutTime ?? request.CheckInTime;
         CloseActiveBreaks(attendance, effectiveCheckout);
-        ApplyAttendanceCalculation(attendance, effectiveCheckout, request.CheckOutTime == null, request.Notes);
+        await ApplyAttendanceCalculationAsync(attendance, effectiveCheckout, request.CheckOutTime == null, request.Notes, cancellationToken);
         attendance.Status = request.CheckOutTime.HasValue ? AttendanceStatus.Adjusted : AttendanceStatus.MissingCheckout;
 
         adjustment.NewWorkedMinutes = attendance.WorkedMinutes;
@@ -256,7 +256,7 @@ public class AttendanceService : IAttendanceService
 
             CloseActiveBreaks(attendance, effectiveCutoff);
             attendance.CheckOutTime = effectiveCutoff;
-            ApplyAttendanceCalculation(attendance, effectiveCutoff, true, attendance.Notes);
+            await ApplyAttendanceCalculationAsync(attendance, effectiveCutoff, true, attendance.Notes, cancellationToken);
             attendance.Status = AttendanceStatus.MissingCheckout;
             attendance.CheckOutSource ??= "AutoClose";
             attendance.UpdatedAt = DateTime.UtcNow;
@@ -342,7 +342,7 @@ public class AttendanceService : IAttendanceService
 
         if (hasOpen)
         {
-            throw new BadRequestException("Nhân viên ðang có ca chýa ðóng.");
+            throw new BadRequestException("Nhï¿½n viï¿½n ï¿½ang cï¿½ ca chï¿½a ï¿½ï¿½ng.");
         }
     }
 
@@ -366,7 +366,7 @@ public class AttendanceService : IAttendanceService
 
         if (attendance == null)
         {
-            throw new BadRequestException("Nhân viên hi?n không có ca ðang m?.");
+            throw new BadRequestException("Nhï¿½n viï¿½n hi?n khï¿½ng cï¿½ ca ï¿½ang m?.");
         }
 
         return attendance;
@@ -382,22 +382,22 @@ public class AttendanceService : IAttendanceService
         }
     }
 
-    private void ApplyAttendanceCalculation(DomainAttendance attendance, DateTime effectiveCheckout, bool missingCheckout, string? notes)
+    private async Task ApplyAttendanceCalculationAsync(DomainAttendance attendance, DateTime effectiveCheckout, bool missingCheckout, string? notes, CancellationToken cancellationToken)
     {
         attendance.CheckOutTime = effectiveCheckout;
         attendance.BreakMinutes = attendance.Breaks.Sum(x => x.DurationMinutes);
         attendance.WorkedMinutes = Math.Max(0, GetPositiveMinutes(attendance.CheckInTime, effectiveCheckout) - attendance.BreakMinutes);
 
-        var rule = ResolveSalaryRuleAsync(attendance.EmployeeId, attendance.CheckInTime).GetAwaiter().GetResult();
-        var standardMinutes = (rule?.StandardHoursPerShift ?? 8) * 60;
+        var rule = await ResolveSalaryRuleAsync(attendance.EmployeeId, attendance.CheckInTime, cancellationToken);
+        var standardMinutes = rule.StandardHoursPerShift * 60;
         var normalMinutes = Math.Min(standardMinutes, attendance.WorkedMinutes);
         attendance.OvertimeMinutes = Math.Max(0, attendance.WorkedMinutes - standardMinutes);
 
-        var baseSalary = (normalMinutes / 60m) * (rule?.HourlyRate ?? 0);
-        var overtimeSalary = (attendance.OvertimeMinutes / 60m) * (rule?.OvertimeRate ?? rule?.HourlyRate ?? 0);
+        var baseSalary = (normalMinutes / 60m) * rule.HourlyRate;
+        var overtimeSalary = (attendance.OvertimeMinutes / 60m) * rule.OvertimeRate;
         var nightMinutes = CalculateNightMinutes(attendance.CheckInTime, effectiveCheckout);
         var nightExtra = 0m;
-        if (nightMinutes > 0 && rule != null && rule.NightShiftMultiplier > 1)
+        if (nightMinutes > 0 && rule.NightShiftMultiplier > 1)
         {
             nightExtra = (nightMinutes / 60m) * rule.HourlyRate * (rule.NightShiftMultiplier - 1);
         }
@@ -407,24 +407,31 @@ public class AttendanceService : IAttendanceService
         attendance.Notes = notes ?? attendance.Notes;
     }
 
-    private async Task<DomainSalaryRule?> ResolveSalaryRuleAsync(int employeeId, DateTime effectiveDate)
+    private async Task<DomainSalaryRule> ResolveSalaryRuleAsync(int employeeId, DateTime effectiveDate, CancellationToken cancellationToken)
     {
-        var employee = await _context.Users.FirstAsync(x => x.UserId == employeeId);
+        var employee = await _context.Users.FirstAsync(x => x.UserId == employeeId, cancellationToken);
 
         var employeeRule = await _context.SalaryRules
             .Where(x => x.EmployeeId == employeeId && x.IsActive && x.EffectiveFrom <= effectiveDate)
             .OrderByDescending(x => x.EffectiveFrom)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (employeeRule != null)
         {
             return employeeRule;
         }
 
-        return await _context.SalaryRules
+        var roleRule = await _context.SalaryRules
             .Where(x => x.Role == employee.Role && x.IsActive && x.EffectiveFrom <= effectiveDate)
             .OrderByDescending(x => x.EffectiveFrom)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (roleRule == null)
+        {
+            throw new BadRequestException("Salary rule is missing for this employee.");
+        }
+
+        return roleRule;
     }
 
     private static int GetPositiveMinutes(DateTime start, DateTime end)
@@ -507,6 +514,8 @@ public class AttendanceService : IAttendanceService
         await _context.SaveChangesAsync(cancellationToken);
     }
 }
+
+
 
 
 

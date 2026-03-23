@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using FpolyCafe.Application.Common.Exceptions;
 using FpolyCafe.Application.Modules.SalaryRules.DTOs;
 using FpolyCafe.Application.Modules.SalaryRules.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -35,7 +37,7 @@ public class SalaryRulesController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<SalaryRuleDto>> Create([FromBody] CreateSalaryRuleDto request)
     {
-        var created = await _salaryRuleService.CreateSalaryRuleAsync(request);
+        var created = await _salaryRuleService.CreateSalaryRuleAsync(request, GetCurrentUserId(), HttpContext.Connection.RemoteIpAddress?.ToString());
         return CreatedAtAction(nameof(GetById), new { id = created.SalaryRuleId }, created);
     }
 
@@ -43,6 +45,17 @@ public class SalaryRulesController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<SalaryRuleDto>> Update(int id, [FromBody] UpdateSalaryRuleDto request)
     {
-        return Ok(await _salaryRuleService.UpdateSalaryRuleAsync(id, request));
+        return Ok(await _salaryRuleService.UpdateSalaryRuleAsync(id, request, GetCurrentUserId(), HttpContext.Connection.RemoteIpAddress?.ToString()));
+    }
+
+    private int GetCurrentUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(userId, out var parsedUserId))
+        {
+            throw new UnauthorizedException("Không xác ð?nh ðý?c ngý?i dùng hi?n t?i.");
+        }
+
+        return parsedUserId;
     }
 }

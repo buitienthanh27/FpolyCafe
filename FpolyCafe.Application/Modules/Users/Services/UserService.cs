@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FpolyCafe.Application.Common.Interfaces;
 using FpolyCafe.Application.Common.Exceptions;
+using FpolyCafe.Application.Common.Interfaces;
 using FpolyCafe.Application.Modules.Users.DTOs;
 using FpolyCafe.Domain.Entities;
 using FpolyCafe.Domain.Enums;
@@ -43,12 +43,15 @@ public class UserService : IUserService
         if (exists)
             throw new BadRequestException("Username đã tồn tại.");
 
+        if (!Enum.TryParse<RoleType>(request.Role, true, out var parsedRole))
+            throw new BadRequestException("Role không hợp lệ.");
+
         var user = new User
         {
             Username = request.Username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             FullName = request.FullName,
-            Role = Enum.Parse<RoleType>(request.Role),
+            Role = parsedRole,
             IsActive = true
         };
 
@@ -64,8 +67,11 @@ public class UserService : IUserService
         if (user == null)
             throw new NotFoundException(nameof(User), userId);
 
+        if (!Enum.TryParse<RoleType>(request.Role, true, out var parsedRole))
+            throw new BadRequestException("Role không hợp lệ.");
+
         user.FullName = request.FullName;
-        user.Role = Enum.Parse<RoleType>(request.Role);
+        user.Role = parsedRole;
         user.IsActive = request.IsActive;
 
         await _context.SaveChangesAsync(cancellationToken);

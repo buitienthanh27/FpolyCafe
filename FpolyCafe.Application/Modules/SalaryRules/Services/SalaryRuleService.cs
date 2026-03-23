@@ -61,7 +61,7 @@ public class SalaryRuleService : ISalaryRuleService
         return Map(entity);
     }
 
-    public async Task<SalaryRuleDto> CreateSalaryRuleAsync(CreateSalaryRuleDto request, CancellationToken cancellationToken = default)
+    public async Task<SalaryRuleDto> CreateSalaryRuleAsync(CreateSalaryRuleDto request, int actorUserId, string? ipAddress, CancellationToken cancellationToken = default)
     {
         ValidateTarget(request.EmployeeId, request.Role);
         ValidateValues(request.HourlyRate, request.OvertimeRate, request.NightShiftMultiplier, request.MaxHoursPerShift, request.StandardHoursPerShift);
@@ -87,11 +87,11 @@ public class SalaryRuleService : ISalaryRuleService
 
         _context.SalaryRules.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        await WriteAuditLogAsync("SalaryRule.Create", entity.SalaryRuleId.ToString(), null, entity, cancellationToken);
+        await WriteAuditLogAsync("SalaryRule.Create", entity.SalaryRuleId.ToString(), null, entity, actorUserId, ipAddress, cancellationToken);
         return await GetSalaryRuleByIdAsync(entity.SalaryRuleId, cancellationToken);
     }
 
-    public async Task<SalaryRuleDto> UpdateSalaryRuleAsync(int id, UpdateSalaryRuleDto request, CancellationToken cancellationToken = default)
+    public async Task<SalaryRuleDto> UpdateSalaryRuleAsync(int id, UpdateSalaryRuleDto request, int actorUserId, string? ipAddress, CancellationToken cancellationToken = default)
     {
         ValidateValues(request.HourlyRate, request.OvertimeRate, request.NightShiftMultiplier, request.MaxHoursPerShift, request.StandardHoursPerShift);
 
@@ -124,7 +124,7 @@ public class SalaryRuleService : ISalaryRuleService
         entity.IsActive = request.IsActive;
 
         await _context.SaveChangesAsync(cancellationToken);
-        await WriteAuditLogAsync("SalaryRule.Update", entity.SalaryRuleId.ToString(), oldSnapshot, entity, cancellationToken);
+        await WriteAuditLogAsync("SalaryRule.Update", entity.SalaryRuleId.ToString(), oldSnapshot, entity, actorUserId, ipAddress, cancellationToken);
         return Map(entity);
     }
 
@@ -178,16 +178,18 @@ public class SalaryRuleService : ISalaryRuleService
         }
     }
 
-    private async Task WriteAuditLogAsync(string action, string entityId, object? oldValue, object? newValue, CancellationToken cancellationToken)
+    private async Task WriteAuditLogAsync(string action, string entityId, object? oldValue, object? newValue, int actorUserId, string? ipAddress, CancellationToken cancellationToken)
     {
         _context.AuditLogs.Add(new AuditLog
         {
+            UserId = actorUserId,
             Action = action,
             EntityName = nameof(SalaryRule),
             EntityId = entityId,
             OldValueJson = oldValue == null ? null : JsonSerializer.Serialize(oldValue),
             NewValueJson = newValue == null ? null : JsonSerializer.Serialize(newValue),
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            IpAddress = ipAddress
         });
         await _context.SaveChangesAsync(cancellationToken);
     }

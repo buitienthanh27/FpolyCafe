@@ -34,6 +34,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<ActionResult<int>> Create([FromBody] CreateCategoryDto request)
     {
         var id = await _categoryService.CreateCategoryAsync(request);
@@ -41,6 +42,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryDto request)
     {
         var result = await _categoryService.UpdateCategoryAsync(id, request);
@@ -48,6 +50,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _categoryService.DeleteCategoryAsync(id);

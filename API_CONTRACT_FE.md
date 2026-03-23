@@ -102,6 +102,10 @@ Endpoints:
 - `PUT /api/categories/{id}`
 - `DELETE /api/categories/{id}`
 
+Quyen:
+- `GET`: moi user da dang nhap
+- `POST/PUT/DELETE`: `Admin,Manager`
+
 Create request:
 
 ```json
@@ -249,6 +253,10 @@ Endpoints:
 - `GET /api/users/{id}`
 - `POST /api/users`
 - `PUT /api/users/{id}`
+
+Quyen:
+- `GET`: `Admin,Manager`
+- `POST/PUT`: `Admin`
 
 Create request:
 
@@ -462,6 +470,10 @@ Endpoints:
 - `POST /api/salaryrules`
 - `PUT /api/salaryrules/{id}`
 
+Quyen:
+- `GET`: `Admin,Manager`
+- `POST/PUT`: `Admin`
+
 Response:
 
 ```json
@@ -571,6 +583,9 @@ Endpoints:
 - `GET /api/reports/top-products?count=5`
 - `GET /api/reports/revenue?days=7`
 
+Quyen:
+- `Admin,Manager`
+
 ### `GET /api/reports/dashboard`
 
 Response:
@@ -591,6 +606,9 @@ Endpoints:
 - `GET /api/reports/late-employees?date=2026-03-23&thresholdHour=8&thresholdMinute=15`
 - `GET /api/reports/overtime-summary?from=2026-03-01&to=2026-03-31`
 - `GET /api/reports/monthly-attendance-summary?month=3&year=2026`
+
+Quyen:
+- `Admin,Manager`
 
 ### `GET /api/reports/attendance-dashboard`
 
@@ -667,6 +685,9 @@ Response:
 
 ### `GET /api/auditlogs?action=Attendance&entityName=Attendance&userId=1&from=2026-03-01&to=2026-03-31`
 
+Quyen:
+- `Admin,Manager`
+
 Response:
 
 ```json
@@ -707,6 +728,10 @@ Ma loi chinh:
 ## 15. Khuyen Nghi Tich Hop FE
 
 - Login xong luu `token`, `username`, `fullName`, `role`
+- Map role:
+  - `0`: `Admin`
+  - `1`: `Staff`
+  - `2`: `Manager`
 - Man hinh cham cong:
   - goi `GET /api/attendance/me/open-shift` khi load
   - goi `GET /api/attendance/me/today` de hien thi tong gio
@@ -719,4 +744,5 @@ Ma loi chinh:
   - di tre: `GET /api/reports/late-employees`
   - OT: `GET /api/reports/overtime-summary`
   - payroll: `GET /api/payroll/monthly`
-
+  - user management: `GET /api/users`, `POST /api/users`, `PUT /api/users/{id}`
+  - salary rule management: `GET /api/salaryrules`, `POST /api/salaryrules`, `PUT /api/salaryrules/{id}`
