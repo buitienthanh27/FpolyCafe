@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="FpolyCafe.Api/FpolyCafe.Api.csproj" />
-  <Project Path="FpolyCafe.Application/FpolyCafe.Application.csproj" />
-  <Project Path="FpolyCafe.Domain/FpolyCafe.Domain.csproj" />
-  <Project Path="FpolyCafe.Infrastructure/FpolyCafe.Infrastructure.csproj" />
-</Solution>
