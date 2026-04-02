@@ -1,0 +1,32 @@
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.deps.json
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Domain.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Domain.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.csproj.AssemblyReference.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.AssemblyInfoInputs.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.AssemblyInfo.cs
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.csproj.CoreCompileInputs.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCaf.E1FB6E22.Up2Date
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\refint\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\ref\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.sourcelink.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.deps.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Domain.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Domain.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.sourcelink.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCaf.E1FB6E22.Up2Date
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\refint\FpolyCafe.Application.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\FpolyCafe.Application.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Application\obj\Debug\net10.0\ref\FpolyCafe.Application.dll

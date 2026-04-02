@@ -1,0 +1,40 @@
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.csproj.AssemblyReference.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.AssemblyInfoInputs.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.AssemblyInfo.cs
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.csproj.CoreCompileInputs.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.deps.json
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.runtimeconfig.json
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Application.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Domain.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Application.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Domain.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCaf.DCBE43A9.Up2Date
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\refint\FpolyCafe.Infrastructure.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.pdb
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.genruntimeconfig.cache
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\ref\FpolyCafe.Infrastructure.dll
+D:\FPTPolytechnic\NET202\FpolyCafe\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.sourcelink.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.deps.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.runtimeconfig.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Infrastructure.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Application.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Domain.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Application.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\bin\Debug\net10.0\FpolyCafe.Domain.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.sourcelink.json
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCaf.DCBE43A9.Up2Date
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\refint\FpolyCafe.Infrastructure.dll
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.pdb
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\FpolyCafe.Infrastructure.genruntimeconfig.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\FpolyCafe.Infrastructure\obj\Debug\net10.0\ref\FpolyCafe.Infrastructure.dll
