@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FpolyCafe.Application.Common.Interfaces;
 using FpolyCafe.Application.Common.Exceptions;
 using FpolyCafe.Application.Modules.POS.DTOs;
+using FpolyCafe.Application.Modules.POS.Services;
 using FpolyCafe.Domain.Entities;
 using FpolyCafe.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public class BillService : IBillService
         _context = context;
     }
 
-    public async Task<int> CreateBillAsync(int? userId, CancellationToken cancellationToken = default)
+    public async Task<int> CreateBillAsync(int? userId, int? customerId, CancellationToken cancellationToken = default)
     {
         if (userId.HasValue && userId.Value != 0)
         {
@@ -29,11 +30,20 @@ public class BillService : IBillService
             if (!userExists) throw new NotFoundException("User", userId.Value);
         }
 
+        if (customerId.HasValue && customerId.Value != 0)
+        {
+            var customerExists = await _context.Customers.AnyAsync(c => c.CustomerId == customerId.Value, cancellationToken);
+            if (!customerExists) throw new NotFoundException("Customer", customerId.Value);
+        }
+
         var bill = new Bill
         {
             UserId = userId ?? 0,
+            CustomerId = customerId,
             CreatedAt = DateTime.UtcNow,
             TotalAmount = 0,
+            DiscountAmount = 0,
+            FinalAmount = 0,
             Status = BillStatus.Waiting
         };
 
@@ -47,6 +57,8 @@ public class BillService : IBillService
     {
         var bill = await _context.Bills
             .Include(b => b.User)
+            .Include(b => b.Customer)
+            .Include(b => b.Promotion)
             .Include(b => b.BillDetails)
                 .ThenInclude(bd => bd.Product)
             .Include(b => b.BillDetails)
@@ -62,6 +74,8 @@ public class BillService : IBillService
     {
         var bills = await _context.Bills
             .Include(b => b.User)
+            .Include(b => b.Customer)
+            .Include(b => b.Promotion)
             .Include(b => b.BillDetails)
                 .ThenInclude(bd => bd.Product)
             .Include(b => b.BillDetails)
@@ -118,6 +132,7 @@ public class BillService : IBillService
         _context.BillDetails.Add(billDetail);
         
         bill.TotalAmount += ((product.Price + toppingsPriceSum) * quantity);
+        UpdateFinalAmount(bill);
         
         await _context.SaveChangesAsync(cancellationToken);
         return true;
@@ -142,6 +157,8 @@ public class BillService : IBillService
         detail.Quantity = quantity;
         detail.Notes = note ?? string.Empty;
 
+        UpdateFinalAmount(detail.Bill);
+
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
@@ -160,6 +177,29 @@ public class BillService : IBillService
         detail.Bill.TotalAmount -= ((detail.HistoricalPrice + toppingPriceSum) * detail.Quantity);
         
         _context.BillDetails.Remove(detail);
+        UpdateFinalAmount(detail.Bill);
+
+        await _context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
+    public async Task<bool> ApplyPromotionAsync(int billId, string promotionCode, CancellationToken cancellationToken = default)
+    {
+        var bill = await _context.Bills.FirstOrDefaultAsync(b => b.BillId == billId, cancellationToken);
+        if (bill == null) throw new NotFoundException("Bill", billId);
+        if (bill.Status != BillStatus.Waiting) throw new BadRequestException("Hóa đơn không ở trạng thái chờ.");
+
+        var promo = await _context.Promotions.FirstOrDefaultAsync(p => p.Code == promotionCode && p.IsActive, cancellationToken);
+        if (promo == null) throw new NotFoundException("Promotion", promotionCode);
+
+        if (bill.TotalAmount < promo.MinBillAmount.GetValueOrDefault())
+            throw new BadRequestException($"Đơn hàng tối thiểu phải từ {promo.MinBillAmount.GetValueOrDefault():N0}đ để áp dụng mã này.");
+
+        if (promo.StartDate > DateTime.UtcNow || promo.EndDate < DateTime.UtcNow)
+            throw new BadRequestException("Mã khuyến mãi đã hết hạn hoặc chưa đến thời gian áp dụng.");
+
+        bill.PromotionId = promo.PromotionId;
+        UpdateFinalAmount(bill);
 
         await _context.SaveChangesAsync(cancellationToken);
         return true;
@@ -170,6 +210,7 @@ public class BillService : IBillService
         var bill = await _context.Bills
             .Include(b => b.BillDetails)
                 .ThenInclude(bd => bd.BillDetailToppings)
+            .Include(b => b.Customer)
             .FirstOrDefaultAsync(b => b.BillId == billId, cancellationToken);
             
         if (bill == null) throw new NotFoundException("Bill", billId);
@@ -178,7 +219,6 @@ public class BillService : IBillService
         // Inventory Deduction Logic
         foreach (var detail in bill.BillDetails)
         {
-            // 1. Deduct Product Recipe Ingredients
             var recipes = await _context.Recipes
                 .Include(r => r.Ingredient)
                 .Where(r => r.ProductId == detail.ProductId && r.SizeId == detail.SizeId)
@@ -192,7 +232,6 @@ public class BillService : IBillService
                 }
             }
 
-            // 2. Deduct Topping Ingredients
             foreach (var billTopping in detail.BillDetailToppings)
             {
                 var toppingDef = await _context.Toppings
@@ -204,6 +243,12 @@ public class BillService : IBillService
                     toppingDef.Ingredient.StockQuantity -= (toppingDef.QuantityNeeded * billTopping.Quantity * detail.Quantity);
                 }
             }
+        }
+
+        // Award points to customer
+        if (bill.Customer != null)
+        {
+            bill.Customer.RewardPoints += (int)(bill.FinalAmount / 1000); // 1 point per 1k
         }
 
         bill.Status = BillStatus.Finished;
@@ -222,14 +267,47 @@ public class BillService : IBillService
         return true;
     }
 
+    private void UpdateFinalAmount(Bill bill)
+    {
+        if (bill.PromotionId.HasValue)
+        {
+            var promo = _context.Promotions.Find(bill.PromotionId.Value);
+            if (promo != null)
+            {
+                decimal discount = 0;
+                if (promo.DiscountType == "Percentage")
+                {
+                    discount = bill.TotalAmount * (promo.DiscountValue / 100);
+                }
+                else
+                {
+                    discount = promo.DiscountValue;
+                }
+                
+                if (discount > bill.TotalAmount) discount = bill.TotalAmount;
+                bill.DiscountAmount = discount;
+            }
+        }
+        else
+        {
+            bill.DiscountAmount = 0;
+        }
+
+        bill.FinalAmount = bill.TotalAmount - bill.DiscountAmount;
+    }
+
     private BillDto MapToDto(Bill bill)
     {
         return new BillDto(
             bill.BillId,
             bill.CreatedAt,
             bill.TotalAmount,
+            bill.DiscountAmount,
+            bill.FinalAmount,
             bill.Status.ToString(),
-            bill.User?.FullName ?? "Khách Vãng Lai",
+            bill.User?.FullName ?? "Unknown",
+            bill.Customer?.FullName ?? "Khách Vãng Lai",
+            bill.Promotion?.Name,
             bill.BillDetails.Select(d => new BillDetailDto(
                 d.BillDetailId,
                 d.ProductId,

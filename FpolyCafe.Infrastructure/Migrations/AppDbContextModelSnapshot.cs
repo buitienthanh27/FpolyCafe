@@ -227,6 +227,18 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("FinalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("PromotionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -237,6 +249,10 @@ namespace FpolyCafe.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BillId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("PromotionId");
 
                     b.HasIndex("UserId");
 
@@ -342,6 +358,40 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("FpolyCafe.Domain.Entities.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("FpolyCafe.Domain.Entities.Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
@@ -354,6 +404,12 @@ namespace FpolyCafe.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("MinStockLevel")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("StockQuantity")
                         .HasColumnType("decimal(18,2)");
@@ -379,6 +435,16 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -398,6 +464,9 @@ namespace FpolyCafe.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InventoryReceiptDetailId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -542,6 +611,45 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.HasIndex("SizeId");
 
                     b.ToTable("ProductSizes");
+                });
+
+            modelBuilder.Entity("FpolyCafe.Domain.Entities.Promotion", b =>
+                {
+                    b.Property<int>("PromotionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromotionId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("DiscountPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("MaxDiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinBillAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PromotionId");
+
+                    b.ToTable("Promotions");
                 });
 
             modelBuilder.Entity("FpolyCafe.Domain.Entities.Recipe", b =>
@@ -748,11 +856,23 @@ namespace FpolyCafe.Infrastructure.Migrations
 
             modelBuilder.Entity("FpolyCafe.Domain.Entities.Bill", b =>
                 {
+                    b.HasOne("FpolyCafe.Domain.Entities.Customer", "Customer")
+                        .WithMany("Bills")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("FpolyCafe.Domain.Entities.Promotion", "Promotion")
+                        .WithMany("Bills")
+                        .HasForeignKey("PromotionId");
+
                     b.HasOne("FpolyCafe.Domain.Entities.User", "User")
                         .WithMany("Bills")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Promotion");
 
                     b.Navigation("User");
                 });
@@ -823,7 +943,7 @@ namespace FpolyCafe.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("FpolyCafe.Domain.Entities.InventoryReceipt", "InventoryReceipt")
-                        .WithMany("InventoryReceiptDetails")
+                        .WithMany("Details")
                         .HasForeignKey("ReceiptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -964,6 +1084,11 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("FpolyCafe.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Bills");
+                });
+
             modelBuilder.Entity("FpolyCafe.Domain.Entities.Ingredient", b =>
                 {
                     b.Navigation("InventoryReceiptDetails");
@@ -973,7 +1098,7 @@ namespace FpolyCafe.Infrastructure.Migrations
 
             modelBuilder.Entity("FpolyCafe.Domain.Entities.InventoryReceipt", b =>
                 {
-                    b.Navigation("InventoryReceiptDetails");
+                    b.Navigation("Details");
                 });
 
             modelBuilder.Entity("FpolyCafe.Domain.Entities.MonthlyPayroll", b =>
@@ -988,6 +1113,11 @@ namespace FpolyCafe.Infrastructure.Migrations
                     b.Navigation("ProductSizes");
 
                     b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("FpolyCafe.Domain.Entities.Promotion", b =>
+                {
+                    b.Navigation("Bills");
                 });
 
             modelBuilder.Entity("FpolyCafe.Domain.Entities.Size", b =>

@@ -35,8 +35,15 @@ public class BillsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<int>> CreateBill([FromBody] CreateBillRequestDto request)
     {
-        var billId = await _billService.CreateBillAsync(request.UserId);
+        var billId = await _billService.CreateBillAsync(request.UserId, request.CustomerId);
         return CreatedAtAction(nameof(GetBillById), new { id = billId }, billId);
+    }
+
+    [HttpPost("{id}/promotion")]
+    public async Task<IActionResult> ApplyPromotion(int id, [FromBody] ApplyPromotionRequestDto request)
+    {
+        await _billService.ApplyPromotionAsync(id, request.Code);
+        return Ok();
     }
 
     [HttpPost("{id}/items")]

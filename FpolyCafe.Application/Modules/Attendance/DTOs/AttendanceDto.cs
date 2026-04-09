@@ -13,6 +13,7 @@ public record AttendanceDto(
     int AttendanceId,
     int EmployeeId,
     string EmployeeName,
+    string Role,
     DateTime CheckInTime,
     DateTime? CheckOutTime,
     int WorkedMinutes,
@@ -29,7 +30,7 @@ public record AttendanceSummaryDto(
     int TotalCompletedShiftsToday);
 public record AttendanceDashboardDto(
     DateTime Date,
-    int ActiveEmployees,
+    int ActiveShifts,
     int EmployeesOnBreak,
     int CompletedShifts,
     int MissingCheckoutShifts,

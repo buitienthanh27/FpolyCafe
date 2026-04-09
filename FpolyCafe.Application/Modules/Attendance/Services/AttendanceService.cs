@@ -483,6 +483,7 @@ public class AttendanceService : IAttendanceService
             attendance.AttendanceId,
             attendance.EmployeeId,
             attendance.Employee?.FullName ?? string.Empty,
+            attendance.Employee?.Role.ToString() ?? string.Empty,
             attendance.CheckInTime,
             attendance.CheckOutTime,
             attendance.WorkedMinutes,

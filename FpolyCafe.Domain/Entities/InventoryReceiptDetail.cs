@@ -2,6 +2,7 @@ namespace FpolyCafe.Domain.Entities;
 
 public class InventoryReceiptDetail
 {
+    public int InventoryReceiptDetailId { get; set; }
     public int ReceiptId { get; set; }
     public int IngredientId { get; set; }
     public decimal Quantity { get; set; }

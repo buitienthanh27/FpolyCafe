@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -24,6 +24,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpPost("check-in")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceDto>> CheckIn([FromBody] CheckInRequestDto request)
     {
         var result = await _attendanceService.CheckInAsync(GetCurrentUserId(), request, HttpContext.Connection.RemoteIpAddress?.ToString());
@@ -31,6 +32,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpPost("break/start")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceDto>> StartBreak([FromBody] StartBreakRequestDto request)
     {
         var result = await _attendanceService.StartBreakAsync(GetCurrentUserId(), request);
@@ -38,6 +40,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpPost("break/end")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceDto>> EndBreak([FromBody] EndBreakRequestDto request)
     {
         var result = await _attendanceService.EndBreakAsync(GetCurrentUserId(), request);
@@ -45,6 +48,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpPost("check-out")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceDto>> CheckOut([FromBody] CheckOutRequestDto request)
     {
         var result = await _attendanceService.CheckOutAsync(GetCurrentUserId(), request, HttpContext.Connection.RemoteIpAddress?.ToString());
@@ -52,6 +56,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpGet("me/today")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceSummaryDto>> GetTodaySummary()
     {
         var result = await _attendanceService.GetTodaySummaryAsync(GetCurrentUserId());
@@ -59,6 +64,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpGet("me/open-shift")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<AttendanceDto?>> GetOpenShift()
     {
         var result = await _attendanceService.GetOpenShiftAsync(GetCurrentUserId());
@@ -66,6 +72,7 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpGet("me/history")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Bartender,Staff")]
     public async Task<ActionResult<IEnumerable<AttendanceDto>>> GetHistory([FromQuery] DateTime? from, [FromQuery] DateTime? to)
     {
         var result = await _attendanceService.GetAttendanceHistoryAsync(GetCurrentUserId(), from, to);
@@ -117,9 +124,8 @@ public class AttendanceController : ControllerBase
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (!int.TryParse(userId, out var parsedUserId))
         {
-            throw new UnauthorizedException("Không xác ð?nh ðý?c ngý?i dùng hi?n t?i.");
+            throw new UnauthorizedException("Khong xac dinh duoc nguoi dung hien tai.");
         }
-
         return parsedUserId;
     }
 }

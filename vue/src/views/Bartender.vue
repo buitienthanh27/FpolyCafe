@@ -6,6 +6,10 @@
         <h1>Khu vực <span>Pha chế</span></h1>
       </div>
       <div class="user-info">
+        <router-link to="/timekeeping" class="btn-timekeeping">
+          <ClipboardList :size="20" />
+          Chấm công
+        </router-link>
         <div class="details">
           <p class="name">{{ fullName }}</p>
           <p class="role">Nhân viên pha chế</p>
@@ -64,7 +68,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { Check, Coffee, CupSoda, LogOut } from 'lucide-vue-next';
+import { Check, Coffee, CupSoda, LogOut, ClipboardList } from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
 import api from '../api';
@@ -169,6 +173,24 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.btn-timekeeping {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  transition: .2s ease;
+}
+
+.btn-timekeeping:hover {
+  background: var(--secondary);
 }
 
 .details {

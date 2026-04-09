@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FpolyCafe.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a76634f2141667bc9fcc2985dc093b4dd6bb449a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ba3de3fd517e7bafc147bde7a77ee3ef053658e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FpolyCafe.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FpolyCafe.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

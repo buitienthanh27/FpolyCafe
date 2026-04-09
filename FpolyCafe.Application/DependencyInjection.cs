@@ -31,6 +31,9 @@ public static class DependencyInjection
         services.AddScoped<ILookupService, LookupService>();
         services.AddScoped<ISalaryRuleService, SalaryRuleService>();
         services.AddScoped<IAuditLogService, AuditLogService>();
+        services.AddScoped<FpolyCafe.Application.Modules.Customers.Services.ICustomerService, FpolyCafe.Application.Modules.Customers.Services.CustomerService>();
+        services.AddScoped<FpolyCafe.Application.Modules.Promotions.Services.IPromotionService, FpolyCafe.Application.Modules.Promotions.Services.PromotionService>();
+        services.AddScoped<FpolyCafe.Application.Modules.Inventory.Services.IInventoryService, FpolyCafe.Application.Modules.Inventory.Services.InventoryService>();
 
         services.AddValidatorsFromAssembly(assembly);
 

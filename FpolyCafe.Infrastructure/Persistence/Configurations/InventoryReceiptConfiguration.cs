@@ -10,6 +10,8 @@ public class InventoryReceiptConfiguration : IEntityTypeConfiguration<InventoryR
     {
         builder.HasKey(ir => ir.ReceiptId);
         builder.Property(ir => ir.TotalCost).HasColumnType("decimal(18,2)");
+        builder.Property(ir => ir.Supplier).HasMaxLength(200);
+        builder.Property(ir => ir.Notes).HasMaxLength(500);
 
         builder.HasOne(ir => ir.User)
             .WithMany(u => u.InventoryReceipts)

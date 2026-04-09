@@ -30,6 +30,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<AuditLog> AuditLogs { get; set; } = null!;
     public DbSet<MonthlyPayroll> MonthlyPayrolls { get; set; } = null!;
     public DbSet<MonthlyPayrollDetail> MonthlyPayrollDetails { get; set; } = null!;
+    public DbSet<Customer> Customers { get; set; } = null!;
+    public DbSet<Promotion> Promotions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

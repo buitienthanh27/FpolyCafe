@@ -64,7 +64,7 @@
       </div>
 
       <footer class="footer">
-        <button class="btn-secondary" @click="goBack">Quay lai ban hang</button>
+        <button class="btn-secondary" @click="goBack">Quay lai cong viec</button>
       </footer>
     </div>
   </div>
@@ -198,7 +198,14 @@ const handleCheckOut = async () => {
   }
 };
 
-const goBack = () => router.push('/cashier');
+const goBack = () => {
+  const role = localStorage.getItem('role');
+  if (role === '3' || role === 'Bartender') {
+    router.push('/bartender');
+  } else {
+    router.push('/cashier');
+  }
+};
 
 const formatTime = (value) => new Date(value).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
 const formatDate = (value) => new Date(value).toLocaleDateString('vi-VN');

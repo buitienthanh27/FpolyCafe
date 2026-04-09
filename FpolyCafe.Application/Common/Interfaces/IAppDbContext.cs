@@ -27,6 +27,8 @@ public interface IAppDbContext
     DbSet<AuditLog> AuditLogs { get; set; }
     DbSet<MonthlyPayroll> MonthlyPayrolls { get; set; }
     DbSet<MonthlyPayrollDetail> MonthlyPayrollDetails { get; set; }
+    DbSet<Customer> Customers { get; set; }
+    DbSet<Promotion> Promotions { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
