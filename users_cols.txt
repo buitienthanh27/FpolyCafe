@@ -1,0 +1,10 @@
+COLUMN_NAME                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------
+UserId                                                                                                                          
+Username                                                                                                                        
+PasswordHash                                                                                                                    
+FullName                                                                                                                        
+Role                                                                                                                            
+IsActive                                                                                                                        
+
+(6 rows affected)

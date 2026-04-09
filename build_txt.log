@@ -1,0 +1,13 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+  FpolyCafe.Domain -> C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Domain\bin\Debug\net10.0\FpolyCafe.Domain.dll
+  FpolyCafe.Application -> C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Application\bin\Debug\net10.0\FpolyCafe.Application.dll
+C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Infrastructure\Persistence\DataSeeder.cs(31,111): error CS0117: 'Customer' does not contain a definition for 'Points' [C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Infrastructure\FpolyCafe.Infrastructure.csproj]
+
+Build FAILED.
+
+C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Infrastructure\Persistence\DataSeeder.cs(31,111): error CS0117: 'Customer' does not contain a definition for 'Points' [C:\Users\Admin\OneDrive\M├íy t├¡nh\GitHud\FpolyCafe.Infrastructure\FpolyCafe.Infrastructure.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.49

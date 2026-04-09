@@ -1,0 +1,27 @@
+TABLE_NAME                                                                                                                      
+--------------------------------------------------------------------------------------------------------------------------------
+__EFMigrationsHistory                                                                                                           
+AttendanceAdjustments                                                                                                           
+AttendanceBreaks                                                                                                                
+Attendances                                                                                                                     
+AuditLogs                                                                                                                       
+BillDetails                                                                                                                     
+BillDetailToppings                                                                                                              
+Bills                                                                                                                           
+Categories                                                                                                                      
+Customers                                                                                                                       
+Ingredients                                                                                                                     
+InventoryReceiptDetails                                                                                                         
+InventoryReceipts                                                                                                               
+MonthlyPayrollDetails                                                                                                           
+MonthlyPayrolls                                                                                                                 
+Products                                                                                                                        
+ProductSizes                                                                                                                    
+ProductToppings                                                                                                                 
+Recipes                                                                                                                         
+SalaryRules                                                                                                                     
+Sizes                                                                                                                           
+Toppings                                                                                                                        
+Users                                                                                                                           
+
+(23 rows affected)

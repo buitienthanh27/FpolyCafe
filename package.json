@@ -1,0 +1,23 @@
+{
+  "name": "githud",
+  "version": "1.0.0",
+  "description": "Dự án API Backend cho hệ thống quản lý quán cà phê FpolyCafe, xây dựng bằng C# .NET 8, Clean Architecture.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buitienthanh27/FpolyCafe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/buitienthanh27/FpolyCafe/issues"
+  },
+  "homepage": "https://github.com/buitienthanh27/FpolyCafe#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.2"
+  }
+}

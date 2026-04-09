@@ -1,0 +1,6 @@
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\GitHud\HashGen\obj\Debug\net9.0\HashGen.sourcelink.json

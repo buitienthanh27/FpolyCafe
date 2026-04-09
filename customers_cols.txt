@@ -1,0 +1,9 @@
+COLUMN_NAME                                                                                                                     
+--------------------------------------------------------------------------------------------------------------------------------
+CustomerId                                                                                                                      
+FullName                                                                                                                        
+PhoneNumber                                                                                                                     
+RewardPoints                                                                                                                    
+CreatedAt                                                                                                                       
+
+(5 rows affected)

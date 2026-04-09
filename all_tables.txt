@@ -1,0 +1,20 @@
+TABLE_NAME                                                                                                                      
+--------------------------------------------------------------------------------------------------------------------------------
+Customers                                                                                                                       
+ProductToppings                                                                                                                 
+__EFMigrationsHistory                                                                                                           
+Categories                                                                                                                      
+Ingredients                                                                                                                     
+Sizes                                                                                                                           
+Toppings                                                                                                                        
+Users                                                                                                                           
+Products                                                                                                                        
+Bills                                                                                                                           
+InventoryReceipts                                                                                                               
+ProductSizes                                                                                                                    
+Recipes                                                                                                                         
+BillDetails                                                                                                                     
+InventoryReceiptDetails                                                                                                         
+BillDetailToppings                                                                                                              
+
+(16 rows affected)
